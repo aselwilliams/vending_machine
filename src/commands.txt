@@ -4,4 +4,5 @@ git branch  (checks which branch you are on)
 git checkout home_work_25 (moves to the given branch)
 git add . (stages all unstaged changes)
 git commit -m "msg" (creates a commit with a message)
-
+git log (checks all the commits created so far)
+git push origin home_work_25 (pushing all the commits to the branch)
