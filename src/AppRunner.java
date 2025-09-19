@@ -22,13 +22,30 @@ public class AppRunner {
                 new Mars(ActionLetter.F, 80),
                 new Pistachios(ActionLetter.G, 130)
         });
-        paymentMethod = new CoinAcceptor(100);
+        paymentMethod = selectPaymentMethod();
     }
 
     public static void run() {
         AppRunner app = new AppRunner();
         while (!isExit) {
             app.startSimulation();
+        }
+    }
+
+    public PaymentMethod selectPaymentMethod() {
+        Scanner sc = new Scanner(System.in);
+        print("Выберите способ оплаты:");
+        print("1 - Монеты");
+        print("2 - Наличные");
+        while (true) {
+            String inputStr = sc.nextLine().trim();
+            if (inputStr.equals("1")) {
+                return new CoinAcceptor(100);
+            } else if (inputStr.equals("2")) {
+                return new CashAcceptor(0);
+            } else {
+                print("Неверный выбор. Попробуйте еще раз.");
+            }
         }
     }
 
@@ -41,7 +58,6 @@ public class AppRunner {
         UniversalArray<Product> allowProducts = new UniversalArrayImpl<>();
         allowProducts.addAll(getAllowedProducts().toArray());
         chooseAction(allowProducts);
-
     }
 
     private UniversalArray<Product> getAllowedProducts() {
@@ -56,7 +72,6 @@ public class AppRunner {
 
     private void chooseAction(UniversalArray<Product> products) {
         showActions(products);
-        print(" h - Выйти");
         String inputStr = fromConsole();
 
         if (inputStr.isEmpty()) {
@@ -66,6 +81,12 @@ public class AppRunner {
         }
 
         String action = inputStr.substring(0, 1);
+        if ("a".equalsIgnoreCase(action)) {
+            paymentMethod.increaseBalance();
+            print("Баланс пополнен.Новый баланс: " + paymentMethod.getAmount());
+            startSimulation();
+            return;
+        }
         if ("h".equalsIgnoreCase(action)) {
             isExit = true;
             return;
@@ -85,9 +106,13 @@ public class AppRunner {
     }
 
     private void showActions(UniversalArray<Product> products) {
+        if (getAllowedProducts().size() == 0) {
+            print(" a - Пополнить баланс");
+        }
         for (int i = 0; i < products.size(); i++) {
             print(String.format(" %s - %s", products.get(i).getActionLetter().getValue(), products.get(i).getName()));
         }
+        print(" h - Выйти");
     }
 
     private String fromConsole() {

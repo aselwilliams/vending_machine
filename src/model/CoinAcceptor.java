@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class CoinAcceptor implements PaymentMethod {
     private int amount;
 
@@ -17,7 +19,9 @@ public class CoinAcceptor implements PaymentMethod {
 
     @Override
     public void increaseBalance() {
-        this.amount += amount;
+        Random random = new Random();
+        int randomAmount = 10 + random.nextInt(41);
+        this.amount += randomAmount;
     }
 
     @Override
