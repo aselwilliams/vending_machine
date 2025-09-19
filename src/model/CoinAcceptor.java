@@ -1,6 +1,6 @@
 package model;
 
-public class CoinAcceptor {
+public class CoinAcceptor implements PaymentMethod {
     private int amount;
 
     public CoinAcceptor(int amount) {
@@ -13,5 +13,19 @@ public class CoinAcceptor {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public void increaseBalance() {
+        this.amount += amount;
+    }
+
+    @Override
+    public boolean tryPay(int price) {
+        if (amount >= price) {
+            amount -= price;
+            return true;
+        }
+        return false;
     }
 }
