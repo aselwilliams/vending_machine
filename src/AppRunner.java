@@ -91,7 +91,7 @@ public class AppRunner {
     }
 
     private String fromConsole() {
-        return new Scanner(System.in).nextLine();
+        return new Scanner(System.in).nextLine().trim();
     }
 
     private void showProducts(UniversalArray<Product> products) {
