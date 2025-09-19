@@ -1,0 +1,5 @@
+git clone https-url (clones the repo to your local)
+git branch -a  (checks what all branches you have)
+git branch  (checks which branch you are on)
+git checkout home_work_25 (moves to the given branch)
+
